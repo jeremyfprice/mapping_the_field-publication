@@ -1,2 +1,7 @@
-# mapping_the_field-publication
-Literature review project on the field of research on learning to teach with technology
+# Mapping The Field
+
+## Literature review project on the field of research on learning to teach with technology
+
+Preparing preservice teachers to teach with technology is important for the contemporary educational context (Darling-Hammond & Bransford, 2005; Davis, 2010; Lemke, 2002). As a new field, little is known about the paradigm and dynamics that shape the field of research on learning to teach with technology. Literature reviews provide clarity into the what is known and how this knowledge is garnered (Boote & Beile, 2005; Onwuegbuzie, Leech, & Collins, 2012) and point the field in generative directions (Boote & Beile, 2005; Shulman, 1999). The concept of paradigm (Wideen, Mayer-Smith, & Moon, 1998)—how the field conducts research and what it values—is a central framework for this review.
+
+We explore the questions: What does the overarching paradigm of the field of research on learning to teach with technology look like? and What subfields within the paradigm exist to shape and inform the broader paradigm? Recognizing the mutually-informing intersections of research, practice and policy (Marilyn Cochran-Smith, 2006; Darling-Hammond, 2016), we look at manuscripts published 2013-2016. The Council for the Accreditation of Educator Preparation (CAEP) assumed oversight for accreditation in 2013 and instituted “Technology and Digital Media” as a cross-cutting theme in their standards for teacher preparation (CAEP, 2013).
