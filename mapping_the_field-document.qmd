@@ -1,8 +1,94 @@
 ---
-title: "Untitled"
+title: "Mapping the Field"
 format: docx
 editor: source
 ---
+
+```{r}
+#| echo: false
+# Load Libraries
+library(readr)
+library(FactoMineR)
+library(factoextra)
+library(CAinterprTools)
+library(ClustOfVar)
+library(cluster)
+library(NbClust)
+library(vegan)
+library(dendextend)
+library(missMDA)
+library(ggbiplot)
+library(dplyr)
+library(purrr)
+library(safejoin)
+library(tidyr)
+library(stringr)
+library(ggcorrplot)
+library(ggalluvial)
+library(ggfittext)
+
+# Load Data
+analysis.scales <- as.data.frame(read_csv("data/analysis-full.csv", col_names = TRUE, show_col_types = FALSE))
+rownames(analysis.scales) <- analysis.scales$manuscriptID
+analysis.scales$manuscriptID <- NULL
+
+factor.flow.frame <- read_csv("data/factor_flow-no_exclude.csv", col_names = TRUE, show_col_types = FALSE)
+
+iu.colors <- c("#990000", "#FFAA00", "#056E41", "#006298", "#59264D")
+iu.10.colors <- c("#990000", "#FFAA00", "#056E41","#A7A9AB", "#006298", "#59264D",
+                  "#DF3603", "#01426A", "#49AFC7")
+```
+
+# Abstract
+
+300 word maximum.
+
+# Keywords
+
+Keyword 1, keyword 2... up to 6?
+
+Start typing your introduction here. Please do not use the word "Introduction" as an initial heading, since your paper is supposed to begin with an introduction. The introduction shall present the research question including key definitions, and spell out the stakes, objectives and scope of the literature review. The last paragraph of the introduction shall list the major remaining sections, which in principle include the presentation of the method adopted for the literature review, the results obtained, the discussion of results and the conclusion. In the main text, while presenting the review method, the authors shall identify the data sources and discuss their respective quality. The discussion shall outline convergences and divergences with respect to existing literature, and also identify blindspots that are worth research consideration in future.
+
+# Methods
+
+Blah blah blah
+
+# Results
+
+Blah blah blah
+
+```{r}
+# Re-run PCA on newly compiled and scaled dataframe
+analysis.pca <- PCA(analysis.scales, graph = FALSE)
+
+# Calculate HCPC
+res.hcpc <- HCPC(analysis.pca, graph = FALSE)
+
+# Create and output dendrogram of clusters by manuscriptID
+fviz_dend(res.hcpc,
+          cex = 0.7,                     # Label size
+          palette = iu.colors,               # Color palette see ?ggpubr::ggpar
+          rect = FALSE, rect_fill = FALSE, # Add rectangle around groups
+          ggtheme = theme_minimal(),
+          #rect_border = iu.colors,           # Rectangle color
+          labels_track_height = 0.8,      # Augment the room for labels
+          main = "Dendrogram of Calculated Clusters") +
+  scale_x_continuous(breaks = NULL)
+```
+
+# Discussion
+
+Blah blah blah
+
+# Conclusion
+
+Blah blah blah
+
+# References
+
+Blah blah blah
+
+# Appendices
 
 ## Quarto
 

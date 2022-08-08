@@ -1,0 +1,175 @@
+start,initial,descriptor_reduction,scale_development,scale_refinement,final,freq
+tpack,initial factors,tpack,teacher pipeline,,teacher pipeline,1
+knowledge,initial factors,tpack,teacher pipeline,,teacher pipeline,1
+pedagogical_content_knowledge,initial factors,tpack,teacher pipeline,,teacher pipeline,1
+knowledge_level,initial factors,tpack,teacher pipeline,,teacher pipeline,1
+computer_literacy,initial factors,technology literacy,tech in field,scale social tech,socializing technology use,1
+information_literacy,initial factors,technology literacy,tech in field,scale social tech,socializing technology use,1
+information_skills,initial factors,technology literacy,tech in field,scale social tech,socializing technology use,1
+media_literacy,initial factors,technology literacy,tech in field,scale social tech,socializing technology use,1
+multiple_literacies,initial factors,technology literacy,tech in field,scale social tech,socializing technology use,1
+technological_literacy,initial factors,technology literacy,tech in field,scale social tech,socializing technology use,1
+technology_transfer,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+achievement_gains,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+alignment_education,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+competence,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+competency_based_teacher_education,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+expertise,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+instructional_effectiveness,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+performance_factors,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+student_teacher_evaluation,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+teacher_competencies,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+teacher_competency_testing,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+evaluation_methods,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+success,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+scores,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+pretests_posttests,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+portfolios_background_materials,initial factors,teacher effectiveness,teacher pipeline,,teacher pipeline,1
+college_faculty,initial factors,teacher educators,methods,,methods,1
+faculty,initial factors,teacher educators,methods,,methods,1
+faculty_development,initial factors,teacher educators,methods,,methods,1
+access_to_computers,initial factors,structural technology issues,exclude,,exclude,1
+barriers,initial factors,structural technology issues,exclude,,exclude,1
+financial_support,initial factors,structural technology issues,exclude,,exclude,1
+troubleshooting,initial factors,structural technology issues,exclude,,exclude,1
+astronomy,initial factors,stem education,subjects,,subject areas,1
+elementary_school_science,initial factors,stem education,subjects,,subject areas,1
+inquiry,initial factors,stem education,subjects,,subject areas,1
+investigations,initial factors,stem education,subjects,,subject areas,1
+science_activities,initial factors,stem education,subjects,,subject areas,1
+science_education,initial factors,stem education,subjects,,subject areas,1
+secondary_school_science,initial factors,stem education,subjects,,subject areas,1
+science_teachers,initial factors,stem education,subjects,,subject areas,1
+science_instruction,initial factors,stem education,subjects,,subject areas,1
+scientific_methodology,initial factors,stem education,subjects,,subject areas,1
+physics,initial factors,stem education,subjects,,subject areas,1
+misconceptions,initial factors,stem education,subjects,,subject areas,1
+mathematics_teachers,initial factors,stem education,subjects,,subject areas,1
+mathematics_instruction,initial factors,stem education,subjects,,subject areas,1
+mathematics_curriculum,initial factors,stem education,subjects,,subject areas,1
+elementary_school_mathematics,initial factors,stem education,subjects,,subject areas,1
+stem_education,initial factors,stem education,subjects,,subject areas,1
+special_education_teachers,initial factors,sped,subjects,,subject areas,1
+inclusion,initial factors,sped,subjects,,subject areas,1
+individualized_instruction,initial factors,sped,subjects,,subject areas,1
+disabilities,initial factors,sped,subjects,,subject areas,1
+audio_equipment,initial factors,specific technologies,specific technologies,,specific technologies,1
+computer_mediated_communication,initial factors,specific technologies,specific technologies,,specific technologies,1
+computer_software,initial factors,specific technologies,specific technologies,,specific technologies,1
+electronic_equipment,initial factors,specific technologies,specific technologies,,specific technologies,1
+electronic_publishing,initial factors,specific technologies,specific technologies,,specific technologies,1
+handheld_devices,initial factors,specific technologies,specific technologies,,specific technologies,1
+internet,initial factors,specific technologies,specific technologies,,specific technologies,1
+laptop_computers,initial factors,specific technologies,specific technologies,,specific technologies,1
+open_source_technology,initial factors,specific technologies,specific technologies,,specific technologies,1
+telecommunications,initial factors,specific technologies,specific technologies,,specific technologies,1
+video_technology,initial factors,specific technologies,specific technologies,,specific technologies,1
+visual_aids,initial factors,specific technologies,specific technologies,,specific technologies,1
+web_2.0_technologies,initial factors,specific technologies,specific technologies,,specific technologies,1
+web_sites,initial factors,specific technologies,specific technologies,,specific technologies,1
+usability,initial factors,specific technologies,specific technologies,,specific technologies,1
+use_studies,initial factors,specific technologies,specific technologies,,specific technologies,1
+computer_simulation,initial factors,simulations and games,simulations and games,,simulations games,1
+games,initial factors,simulations and games,simulations and games,,simulations games,1
+simulated_environment,initial factors,simulations and games,simulations and games,,simulations games,1
+cognitive_development,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+decision_making,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+prior_learning,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+problem_solving,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+thinking_skills,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+transfer_of_training,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+value_judgment,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+self_evaluation_individuals,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+self_evaluation_groups,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+self_concept,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+modeling_psychology,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+role_models,initial factors,metacognition,teacher pipeline,,teacher pipeline,1
+computer_assisted_instruction,initial factors,learning systems,exclude,,exclude,1
+courseware,initial factors,learning systems,exclude,,exclude,1
+integrated_learning_systems,initial factors,learning systems,exclude,,exclude,1
+web_based_instruction,initial factors,learning systems,exclude,,exclude,1
+online_courses,initial factors,learning systems,exclude,,exclude,1
+electronic_learning,initial factors,learning systems,exclude,,exclude,1
+assignments,initial factors,learning systems,exclude,,exclude,1
+curriculum_development,initial factors,instructional design,instructional design,,instructional design,1
+curriculum_implementation,initial factors,instructional design,instructional design,,instructional design,1
+educational_objectives,initial factors,instructional design,instructional design,,instructional design,1
+educational_planning,initial factors,instructional design,instructional design,,instructional design,1
+instructional_material_evaluation,initial factors,instructional design,instructional design,,instructional design,1
+learning_activities,initial factors,instructional design,instructional design,,instructional design,1
+lesson_plans,initial factors,instructional design,instructional design,,instructional design,1
+planning,initial factors,instructional design,instructional design,,instructional design,1
+assignments,initial factors,instructional design,instructional design,,instructional design,1
+curriculum_development,initial factors,instructional design,instructional design,,instructional design,1
+curriculum_implementation,initial factors,instructional design,instructional design,,instructional design,1
+educational_objectives,initial factors,instructional design,instructional design,,instructional design,1
+worksheets,initial factors,instructional design,instructional design,,instructional design,1
+textbooks,initial factors,instructional design,instructional design,,instructional design,1
+instructional_development,initial factors,instructional design,instructional design,,instructional design,1
+college_school_cooperation,initial factors,field experiences,tech in field,,socializing technology use,1
+field_experience_programs,initial factors,field experiences,tech in field,,socializing technology use,1
+internship_programs,initial factors,field experiences,tech in field,,socializing technology use,1
+partnerships_in_education,initial factors,field experiences,tech in field,,socializing technology use,1
+professional_development_schools,initial factors,field experiences,tech in field,,socializing technology use,1
+student_teaching,initial factors,field experiences,tech in field,,socializing technology use,1
+practicums,initial factors,field experiences,tech in field,,socializing technology use,1
+service_learning,initial factors,field experiences,tech in field,,socializing technology use,1
+mentors,initial factors,field experiences,tech in field,,socializing technology use,1
+childrens_literature,initial factors,ela,subjects,,subject areas,1
+comprehension,initial factors,ela,subjects,,subject areas,1
+content_area_reading,initial factors,ela,subjects,,subject areas,1
+content_area_writing,initial factors,ela,subjects,,subject areas,1
+english_instruction,initial factors,ela,subjects,,subject areas,1
+language_arts,initial factors,ela,subjects,,subject areas,1
+literacy,initial factors,ela,subjects,,subject areas,1
+literacy_education,initial factors,ela,subjects,,subject areas,1
+poetry,initial factors,ela,subjects,,subject areas,1
+reader_response,initial factors,ela,subjects,,subject areas,1
+reading_assignments,initial factors,ela,subjects,,subject areas,1
+reading_instruction,initial factors,ela,subjects,,subject areas,1
+reading_strategies,initial factors,ela,subjects,,subject areas,1
+writing_across_the_curriculum,initial factors,ela,subjects,,subject areas,1
+writing_assignments,initial factors,ela,subjects,,subject areas,1
+writing_composition,initial factors,ela,subjects,,subject areas,1
+writing_instruction,initial factors,ela,subjects,,subject areas,1
+writing_processes,initial factors,ela,subjects,,subject areas,1
+writing_skills,initial factors,ela,subjects,,subject areas,1
+story_telling,initial factors,ela,subjects,,subject areas,1
+reading_skills,initial factors,ela,subjects,,subject areas,1
+english_teachers,initial factors,ela,subjects,,subject areas,1
+english_instruction,initial factors,ela,subjects,,subject areas,1
+english,initial factors,ela,subjects,,subject areas,1
+educational_innovation,initial factors,educational change,exclude,,exclude,1
+educational_trends,initial factors,educational change,exclude,,exclude,1
+experimental_programs,initial factors,educational change,exclude,,exclude,1
+instructional_innovation,initial factors,educational change,exclude,,exclude,1
+intervention,initial factors,educational change,exclude,,exclude,1
+transformational_leadership,initial factors,educational change,exclude,,exclude,1
+attitudes,initial factors,attitudes beliefs,attitudes beliefs,,attitudes beliefs,1
+beliefs,initial factors,attitudes beliefs,attitudes beliefs,,attitudes beliefs,1
+teacher_attitudes,initial factors,attitudes beliefs,attitudes beliefs,,attitudes beliefs,1
+student_attitudes,initial factors,attitudes beliefs,attitudes beliefs,,attitudes beliefs,1
+administrator_attitudes,initial factors,attitudes beliefs,attitudes beliefs,,attitudes beliefs,1
+student_teacher_attitudes,initial factors,attitudes beliefs,attitudes beliefs,,attitudes beliefs,1
+genres_practitioner,initial factors,phenomenology,phenomenology,,phenomenology,1
+sources_interview,initial factors,phenomenology,phenomenology,,phenomenology,1
+purposes_subjectification,initial factors,phenomenology,phenomenology,,phenomenology,1
+sources_observation,initial factors,methods,methods,,methods,1
+sources_artifact,initial factors,methods,methods,,methods,1
+traditions_technical,initial factors,teacher pipeline,teacher pipeline,,teacher pipeline,1
+genres_effects,initial factors,teacher pipeline,teacher pipeline,,teacher pipeline,1
+sources_survey,initial factors,teacher pipeline,teacher pipeline,,teacher pipeline,1
+purposes_capital,initial factors,teacher pipeline,teacher pipeline,,teacher pipeline,1
+traditions_developmentalist,initial factors,teacher pipeline,teacher pipeline,,teacher pipeline,1
+purposes_justice,initial factors,exclude,exclude,,exclude,1
+purposes_other_purpose,initial factors,exclude,exclude,,exclude,1
+traditions_reconstruction,initial factors,exclude,exclude,,exclude,1
+traditions_other_tradition,initial factors,exclude,exclude,,exclude,1
+purposes_academic,initial factors,curriculum,curriculum,scale subjects,subject areas,1
+traditions_academic,initial factors,curriculum,curriculum,scale subjects,subject areas,1
+genres_other,initial factors,curriculum,curriculum,scale subjects,subject areas,1
+genres_design,initial factors,curriculum,curriculum,scale subjects,subject areas,1
+sources_review,initial factors,curriculum,curriculum,scale subjects,subject areas,1
+traditions_deliberative,initial factors,social,social,scale social tech,socializing technology use,1
+genres_interpretive,initial factors,social,social,scale social tech,socializing technology use,1
+purposes_socialization,initial factors,social,social,scale social tech,socializing technology use,1

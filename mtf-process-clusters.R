@@ -29,7 +29,6 @@ library(cluster)
 library(NbClust)
 library(vegan)
 library(dendextend)
-library(corrplot)
 library(missMDA)
 library(ggbiplot)
 library(dplyr)
@@ -37,6 +36,10 @@ library(purrr)
 library(safejoin)
 library(tidyr)
 library(stringr)
+library(ggcorrplot)
+library(ggalluvial)
+library(ggfittext)
+
 
 ###########################################
 #            Define Functions             #
@@ -71,9 +74,17 @@ binary.numeric.translate <- function(the.frame, start.col) {
   return(the.frame)
 }
 
+frame.factor.details <- function(the.frame, clusterNum) {
+  the.frame$cluster <- clusterNum
+  the.frame$factors <- rownames(the.frame)
+  rownames(the.frame) <- NULL
+  return(the.frame)
+}
+
 # Define colors, using IU branding colors https://www.iu.edu/brand/brand-expression/visual-language/color/index.html
 iu.colors <- c("#990000", "#FFAA00", "#056E41", "#006298", "#59264D")
-
+iu.10.colors <- c("#990000", "#FFAA00", "#056E41","#A7A9AB", "#006298", "#59264D",
+                  "#DF3603", "#01426A", "#49AFC7")
 
 ###########################################
 #                 Load Data               #
@@ -333,7 +344,6 @@ descriptors.frame <- as.data.frame(descriptors.frame)
 descriptors.frame <- descriptors.frame %>% setNames(paste0('descriptors_', names(.))) %>%
   dplyr::rename("manuscriptID" = "descriptors_manuscriptID")
 
-
 # Create the data frame for analysis by joining the individual data frames together
 analysis.frame <- binary.text.translate(sources.frame, 2) %>%
   right_join(binary.text.translate(traditions.frame, 2), by = "manuscriptID") %>%
@@ -445,6 +455,18 @@ analysis.scales <- analysis.scales %>% rowwise() %>%
   dplyr::mutate(scale_social_tech = sum(c_across(any_of(scale.social.tech.list)))) %>%
   select(-all_of(scale.social.tech.list))
 
+list.of.lists <- do.call(c, list(tpack.list, technology.literacy.list, teacher.effectiveness.list,
+                           teacher.educators.list, structural.technology.issues.list,
+                           stem.education.list, sped.list, specific.technologies.list,
+                           simulations.games.list, metacognition.list, learning.systems.list,
+                           instructional.design.list, field.experiences.list, ela.list,
+                           educational.change.list, attitudes.beliefs.list, scale.social.tech.list,
+                           scale.subjects.list, scale.tech.in.field.list, scale.phenomenology.list,
+                           scale.methods.list, scale.pipeline.list, scale.justice.list,
+                           scale.curriculum.list, social.scale.list))
+list.of.lists <- as.data.frame(list.of.lists)
+write_csv(list.of.lists, "output/all_descriptors.csv")
+
 # Bring the data back into a dataframe and return the key manuscriptIDs to row names
 analysis.scales <- as.data.frame(analysis.scales)
 rownames(analysis.scales) <- analysis.scales$manuscriptID
@@ -458,6 +480,15 @@ colnames(analysis.scales) <- c("instructional_design", "specific_technologies",
                                "attitudes_beliefs", "simulations_games",
                                "teacher_pipeline", "methods", "phenomonology",
                                "subject_areas", "socializing_technology_use")
+
+analysis.scales <- as.data.frame(analysis.scales)
+analysis.scales$manuscriptID <- rownames(analysis.scales)
+rownames(analysis.scales) <- NULL
+
+#write_csv(as.data.frame(analysis.scales), "data/analysis-full.csv")
+rownames(analysis.scales) <- analysis.scales$manuscriptID
+analysis.scales$manuscriptID <- NULL
+
 
 ############################################################
 #  Compute hierarchical clustering on principal components #
@@ -481,6 +512,7 @@ fviz_dend(res.hcpc,
   scale_x_continuous(breaks = NULL)
 ggsave("output/cluster_dend.pdf", width = 22, height = 6, units = "in", dpi = 300)
 
+# Create and output a cluster map using calculated X-Y coordinates
 fviz_cluster(res.hcpc,
              repel = TRUE,            # Avoid label overlapping
              show.clust.cent = TRUE, # Show cluster centers
@@ -489,31 +521,32 @@ fviz_cluster(res.hcpc,
              main = "Cluster Map of Calculated Clusters")
 ggsave("output/cluster_map.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
 
+# Create and output scree plot to identify explanatory dimensions
 fviz_eig(analysis.pca, addlabels = TRUE, ylim = c(0, 20), ggtheme = theme_minimal())
+ggsave("output/scree_plot.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
 
+# Pull out variables for analysis
 var <- get_pca_var(analysis.pca)
-# Coordinates
-var$coord
-# Cos2: quality on the factore map
-head(var$cos2)
-# Contributions to the principal components
-head(var$contrib)
-# Coordinates of variables
-head(var$coord, 4)
-library(ggcorrplot)
-library(ggsci)
 
-  #corrplot(var$cos2, is.corr=FALSE, tl.col="black", method = "color", col = COL2('PuOr'))
+# Create and output a correlation plot for factors and dimensions. Of particular
+# interest are dimensions 1 and 2, and potentially 3.
 ggcorrplot(t(var$cos2), method = "circle", colors = c("#990000", "#59264D", "#FFAA00")) +
   labs(x = "Dimensions", y = "Factors", title = "Dimension Correlations") +
   theme_minimal()
 ggsave("output/corrplot.pdf", width = 8.5, height = 11, units = "in", dpi = 300)
 
-# Total cos2 of variables on Dim.1 and Dim.2
-fviz_cos2(analysis.pca, choice = "var", axes = 1)
-fviz_cos2(analysis.pca, choice = "var", axes = 2)
+# Scree plots of each dimension as another representation of the correlation plot
+# Dimension 1
+fviz_contrib(analysis.pca, choice = "var", axes = 1, top = 10)
+ggsave("output/dim1-contributions.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
+# Dimension 2
+fviz_contrib(analysis.pca, choice = "var", axes = 2, top = 10)
+ggsave("output/dim2-contributions.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
+# Dimension 3
+fviz_contrib(analysis.pca, choice = "var", axes = 3, top = 10)
+ggsave("output/dim3-contributions.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
 
-# Color by cos2 values: quality on the factor map
+# PCA factor map color by cos2 values: quality on the factor map
 fviz_pca_var(analysis.pca, col.var = "cos2",
              gradient.cols = c("#59264D", "#FFAA00", "#990000"), 
              repel = TRUE # Avoid text overlapping
@@ -522,30 +555,60 @@ ggsave("output/pca.pdf", width = 11, height = 11, units = "in", dpi = 300)
 
 
 
-# Paragons!
+# Identify the "paragons" from the HCPC analysis, that is, those papers that are
+# closest to the center of each cluster, indicating they are good representatives.
 res.hcpc$desc.ind$para
-# Clusters
-res.hcpc$data.clust
-# Contributions to Clusters
-res.hcpc$desc.var$quanti
-# Descriptions of Dimensions
-res.hcpc$desc.axes
 
-cluster.details.1 <- res.hcpc$desc.var$quanti$`1`
+# Pull out contributing factor details from each cluster and turn it into a dataframe
+
+# Cluster 1
+cluster.details.1 <- frame.factor.details(as.data.frame(res.hcpc$desc.var$quanti$`1`), 1)
 # Cluster 1: Learning to Teach with Games and Simulations
-cluster.details.2 <- res.hcpc$desc.var$quanti$`2`
+
+# Cluster 2
+cluster.details.2 <- frame.factor.details(as.data.frame(res.hcpc$desc.var$quanti$`2`), 2)
 # Cluster 2: Building a TPACK-Informed Teacher Workforce
-cluster.details.3 <- res.hcpc$desc.var$quanti$`3`
+
+# Cluster 3
+cluster.details.3 <- frame.factor.details(as.data.frame(res.hcpc$desc.var$quanti$`3`), 3)
 # Cluster 3: Understanding What Teachers Do with Technology
-cluster.details.4 <- res.hcpc$desc.var$quanti$`4`
+
+# Cluster 4
+cluster.details.4 <- frame.factor.details(as.data.frame(res.hcpc$desc.var$quanti$`4`), 4)
 # Cluster 4: Shaping Beliefs and Attitudes around Technology Use through Socialization
-cluster.details.5 <- res.hcpc$desc.var$quanti$`5`
+
+# Cluster 5
+cluster.details.5 <- frame.factor.details(as.data.frame(res.hcpc$desc.var$quanti$`5`), 5)
 # Understanding Impressions Around Technology Use in the Field
 
-head(var$contrib, 4)
-corrplot(var$contrib, is.corr=FALSE)
-# Contributions of variables to PC1
-fviz_contrib(analysis.pca, choice = "var", axes = 1, top = 10)
-# Contributions of variables to PC2
-fviz_contrib(analysis.pca, choice = "var", axes = 2, top = 10)
+# Bind all the clusters together into one dataframe for easier use and display
+cluster.details.frame <- bind_rows(cluster.details.1, cluster.details.2, cluster.details.3,
+                                   cluster.details.4, cluster.details.5)
+
+write_csv(cluster.details.frame, "output/cluster_details.csv")
+  
+factor.flow.frame <- read_csv("data/factor_flow-no_exclude.csv", col_names = TRUE, show_col_types = FALSE)
+ggplot(data = factor.flow.frame,
+       aes(#axis1 = start,
+           axis1 = descriptor_reduction,
+           axis3 = final)) + #,
+           #axis3 = final)) +
+  scale_x_discrete(limits = c("Descriptor Reduction", #"Scale Development",
+                              "Final"), expand = c(.2, .05)) +
+  xlab("Process") +
+  geom_alluvium(aes(fill = final)) +
+  geom_stratum(alpha = 0, color = "#EDEBEB36") +
+  ggfittext::geom_fit_text(stat = "stratum", aes(label = after_stat(stratum)), width = 1/4, min.size = 2.5, color = "#191919") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.line = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y = element_blank()) +
+  scale_fill_manual(values = iu.10.colors) #+
+ggsave("output/process-alluvial.pdf", width = 22, height = 11, units = "in", dpi = 300)
+
+
+
+
 
