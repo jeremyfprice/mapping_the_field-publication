@@ -1,0 +1,133 @@
+---
+title: "te-tet-differences"
+output: html_document
+date: "2022-08-09"
+---
+
+2013-2019
+
+TE Baseline 2239
+
+https://eric.ed.gov/?q=descriptor%3a%22preservice+teachers%22+descriptor%3a%22preservice+teacher+education%22+descriptor%3a%22teacher+education%22+descriptor%3a%22teacher+education+programs%22+-descriptor%3a%22foreign+countries%22+pubyearmax%3a2019+pubyearmin%3a2013&pr=on&ff1=pubReports+-+Research
+
+TE + Minority Groups 170
+https://eric.ed.gov/?q=(descriptor%3a%22minority+groups%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Indigenous Populations 7
+https://eric.ed.gov/?q=(descriptor%3a%22indigenous+populations%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Race 209
+https://eric.ed.gov/?q=(descriptor%3a%22race%22+OR+%22racial+bias%22+OR+%22racial+factors%22+OR+%22racial+attitudes%22+OR+%22racial+discrimination%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Social Justice 236
+https://eric.ed.gov/?q=(descriptor%3a%22social+justice%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Culturally Relevant 368
+https://eric.ed.gov/?q=(descriptor%3a%22culturally+relevant+education%22+OR+descriptor%3a%22multicultural+education%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Ethnic Diversity 14
+https://eric.ed.gov/?q=(descriptor%3a%22ethnic+diversity%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Individual Differences 11
+https://eric.ed.gov/?q=(descriptor%3a%22individual+differences%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Urban Contexts 305
+https://eric.ed.gov/?q=(descriptor%3a%22urban+schools%22+OR+descriptor%3a%22urban+education%22+OR+descriptor%3a%22urban+teaching%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Social Change 13
+https://eric.ed.gov/?q=(descriptor%3a%22social+change%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Place 16
+https://eric.ed.gov/?q=(descriptor%3a%22place+based+education%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Community 75
+https://eric.ed.gov/?q=(descriptor%3a%22community+relations%22+OR+descriptor%3a%22school+community+relationship%22+OR+descriptor%3a%22family+school+relationship%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Media 42
+https://eric.ed.gov/?q=(descriptor%3a%22media+literacy%22+OR+descriptor%3a%22multiple+literacies%22+OR+descriptor%3a%22popular+culture%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Instructional Design 595
+https://eric.ed.gov/?q=(descriptor%3a%22instructional+design%22+OR+descriptor%3a%22curriculum+development%22+OR+descriptor%3a%22lesson+plans%22+OR+descriptor%3a%22learning+activities%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + PCK 639
+https://eric.ed.gov/?q=(descriptor%3a%22pedagogical+content+knowledge%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Beliefs/Attitudes 2945
+https://eric.ed.gov/?q=(descriptor%3a%22beliefs%22+OR+descriptor%3a%22attitudes%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Surveys 1088
+https://eric.ed.gov/?q=(descriptor%3a%22surveys%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Self-Efficacy 472
+https://eric.ed.gov/?q=(descriptor%3a%22self+efficacy%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Diversity 235
+https://eric.ed.gov/?q=(descriptor%3a%22ethnic+diversity%22+OR+descriptor%3a%22diversity+(faculty)%22+OR+descriptor%3a%22diversity+(institutional)%22+OR+descriptor%3a%22student+diversity%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TE + Inclusion/Equity 290
+https://eric.ed.gov/?q=(descriptor%3a%22inclusion%22+OR+%22descriptor%3aequal+education%22+OR+descriptor%3a%22opportunities%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+
+
+
+TET + Inclusion/Equity 7
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22inclusion%22+OR+%22descriptor%3aequal+education%22+OR+descriptor%3a%22opportunities%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)++pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Diversity 3
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22ethnic+diversity%22+OR+descriptor%3a%22diversity+(faculty)%22+OR+descriptor%3a%22diversity+(institutional)%22+OR+descriptor%3a%22student+diversity%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET Self-Efficacy 39
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22self+efficacy%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Surveys 85
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22surveys%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Beliefs/Attitudes 167
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22beliefs%22+OR+descriptor%3a%22attitudes%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + PCK 98
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22pedagogical+content+knowledge%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Instructional Design 63
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22instructional+design%22+OR+descriptor%3a%22curriculum+development%22+OR+descriptor%3a%22lesson+plans%22+OR+descriptor%3a%22learning+activities%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Media 42
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+++(descriptor%3a%22media+literacy%22+OR+descriptor%3a%22multiple+literacies%22+OR+descriptor%3a%22popular+culture%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Community 1
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22community+relations%22+OR+descriptor%3a%22school+community+relationship%22+OR+descriptor%3a%22family+school+relationship%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Place 0
+https://eric.ed.gov/?q=%28descriptor%3A%22technology+integration%22+OR+descriptor%3A%22computer+uses+in+education%22%29+AND+%28descriptor%3A%22place+based+education%22%29+AND+%28descriptor%3A%22preservice+teachers%22+OR+descriptor%3A%22preservice+teacher+education%22+OR+descriptor%3A%22teacher+education%22+OR+descriptor%3A%22teacher+education+programs%22%29+AND+%28-descriptor%3A%22foreign+countries%22%29+pubyearmin%3A2013+pubyearmax%3A2019&pr=on
+
+TET + Social Change 0
+https://eric.ed.gov/?q=%28descriptor%3A%22technology+integration%22+OR+descriptor%3A%22computer+uses+in+education%22%29+AND+%28descriptor%3A%22social+change%22%29+AND+%28descriptor%3A%22preservice+teachers%22+OR+descriptor%3A%22preservice+teacher+education%22+OR+descriptor%3A%22teacher+education%22+OR+descriptor%3A%22teacher+education+programs%22%29+AND+%28-descriptor%3A%22foreign+countries%22%29+pubyearmin%3A2013+pubyearmax%3A2019&pr=on
+
+TET + Urban Contexts 2
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22urban+schools%22+OR+descriptor%3a%22urban+education%22+OR+descriptor%3a%22urban+teaching%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Individual Differences 0
+https://eric.ed.gov/?q=%28descriptor%3A%22technology+integration%22+OR+descriptor%3A%22computer+uses+in+education%22%29+AND+%28descriptor%3A%22individual+differences%22%29+AND+%28descriptor%3A%22preservice+teachers%22+OR+descriptor%3A%22preservice+teacher+education%22+OR+descriptor%3A%22teacher+education%22+OR+descriptor%3A%22teacher+education+programs%22%29+AND+%28-descriptor%3A%22foreign+countries%22%29+pubyearmin%3A2013+pubyearmax%3A2019&pr=on
+
+TET + Ethnic Diversity 0
+https://eric.ed.gov/?q=(descriptor%3A%22technology+integration%22+OR+descriptor%3A%22computer+uses+in+education%22)+AND+(descriptor%3A%22ethnic+diversity%22)+AND+(descriptor%3A%22preservice+teachers%22+OR+descriptor%3A%22preservice+teacher+education%22+OR+descriptor%3A%22teacher+education%22+OR+descriptor%3A%22teacher+education+programs%22)+AND+(-descriptor%3A%22foreign+countries%22)+pubyearmin%3A2013+pubyearmax%3A2019&pr=on&ff1=pubReports+-+Research
+
+TET + Culturally Relevant 2
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22culturally+relevant+education%22+OR+descriptor%3a%22multicultural+education%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Social Justice 1
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22social+justice%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Race 0
+https%3A%2F%2Feric.ed.gov%2F%3Fq%3D%28descriptor%253a%2522technology%2Bintegration%2522%2BOR%2Bdescriptor%253a%2522computer%2Buses%2Bin%2Beducation%2522%29%2BAND%2B%28descriptor%253a%2522social%2Bjustice%2522%29%2BAND%2B%28descriptor%253a%2522preservice%2Bteachers%2522%2BOR%2Bdescriptor%253a%2522preservice%2Bteacher%2Beducation%2522%2BOR%2Bdescriptor%253a%2522teacher%2Beducation%2522%2BOR%2Bdescriptor%253a%2522teacher%2Beducation%2Bprograms%2522%29%2BAND%2B%28-descriptor%253a%2522foreign%2Bcountries%2522%29%2Bpubyearmin%253a2013%2Bpubyearmax%253a2019%26pr%3Don%26ff1%3DpubReports%2B-%2BResearch&pr=on&ff1=pubReports+-+Research
+
+TET + Indigenous Populations 0
+https://eric.ed.gov/?q=(descriptor:%22technology%20integration%22%20OR%20descriptor:%22computer%20uses%20in%20education%22)%20AND%20(descriptor%3a%22indigenous%20populations%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET + Minority Groups 1
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22minority+groups%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+TET Baseline 327
+https://eric.ed.gov/?q=(descriptor%3a%22technology+integration%22+OR+descriptor%3a%22computer+uses+in+education%22)+AND+(descriptor%3a%22preservice+teachers%22+OR+descriptor%3a%22preservice+teacher+education%22+OR+descriptor%3a%22teacher+education%22+OR+descriptor%3a%22teacher+education+programs%22)+AND+(-descriptor%3a%22foreign+countries%22)+pubyearmin%3a2013+pubyearmax%3a2019&pr=on&ff1=pubReports+-+Research
+
+
