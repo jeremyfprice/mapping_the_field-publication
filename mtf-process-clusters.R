@@ -49,6 +49,7 @@ library(info.centrality)
 library(igraph)
 library(glue)
 library(ggraph)
+library(gt)
 
 ###########################################
 #            Define Functions             #
