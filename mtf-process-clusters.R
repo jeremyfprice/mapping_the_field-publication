@@ -21,15 +21,16 @@
 
 
 library(readr)
+library(ggplot2)
 library(FactoMineR)
 library(factoextra)
-library(CAinterprTools)
-library(ClustOfVar)
-library(cluster)
-library(NbClust)
+#library(CAinterprTools)
+#library(ClustOfVar)
+#library(cluster)
+#library(NbClust)
 library(vegan)
 library(dendextend)
-library(missMDA)
+#library(missMDA)
 library(ggbiplot)
 library(dplyr)
 library(purrr)
@@ -39,7 +40,15 @@ library(stringr)
 library(ggcorrplot)
 library(ggalluvial)
 library(ggfittext)
-
+library(tidyclust)
+library(flexclust)
+#library(hrbrthemes)
+library(ggpubr)
+library(sna)
+library(info.centrality)
+library(igraph)
+library(glue)
+library(ggraph)
 
 ###########################################
 #            Define Functions             #
@@ -81,10 +90,170 @@ frame.factor.details <- function(the.frame, clusterNum) {
   return(the.frame)
 }
 
+four_quadrant <- function(x, col_text="#FFF7F8") {
+  # Source: https://stackoverflow.com/questions/57923246/making-a-a-four-quadrant-proportional-area-chart-in-r
+  nx <- length(x)
+  sqx <- sqrt(x) 
+  df <- data.frame(x=c(sqx[1],-sqx[2],-sqx[3],sqx[4])/2, 
+                   y=c(sqx[1],sqx[2],-sqx[3],-sqx[4])/2, 
+                   size=sqx, label=x)
+  mm <- max(df$size)*1.1
+  
+  ggplot(data=df, aes(x=x, y=y, width=size, height=size, 
+                      group=factor(size))) +
+    geom_tile(fill = iu.4.colors) +
+    geom_text(aes(label=label), col=col_text, size=5) +
+    geom_hline(aes(yintercept=0), size=0.8) +
+    geom_vline(aes(xintercept=0), size=0.8) +
+    coord_fixed() +
+    #xlim(c(-mm,mm)) + ylim(c(-mm,mm)) +
+    theme_void() +
+    theme(legend.position = "none")
+}
+
+ego.effective.size <- function(g, ego, ...) {
+  egonet <- induced.subgraph(g, neighbors(g, ego, ...))
+  n <- vcount(egonet)
+  t <- ecount(egonet)
+  return(n - (2 * t) / n)
+}
+
+isolate.cluster <- function(the.cluster, the.frame) {
+  the.frame <- the.frame %>%
+    left_join(analysis.cluster.frame, by = "manuscriptID") %>%
+    filter(cluster == the.cluster) %>%
+    select(manuscriptID, cite)
+  return(the.frame)
+}
+
+calculate.centrality <- function(the.frame) {
+  the.graph <- simplify(
+    graph_from_edgelist(as.matrix(the.frame), directed = FALSE),
+    remove.loops = TRUE, remove.multiple = TRUE)
+  
+  the.network <- network(the.frame,
+                         matrix.type = "edgelist",
+                         ignore.eval = TRUE,
+                         multiple = TRUE,
+                         directed = FALSE)
+  
+  data.degree <- centralization.degree(the.graph, mode = "all", loops = FALSE)
+  data.net.degree <- the.graph$centralization
+  data.betweenness <- centralization.betweenness(the.graph, directed = FALSE)
+  data.net.betweenness <- data.betweenness$centralization
+  data.closeness <- centralization.closeness(the.graph, mode = "all")
+  data.net.closeness <- data.closeness$centralization
+  data.eigen <- centralization.evcent(the.graph, directed = FALSE)
+  #data.prestige <- prestige(analysis.cites.graph)
+  data.coreness <- coreness(the.graph, mode = "all")
+  #data.power <- power_centrality(analysis.cites.graph, loops = FALSE)
+  data.info <- info.centrality.vertex(the.graph)
+  
+  analysis.network.data <- data.frame(degree = data.degree$res,
+                                      betweenness = data.betweenness$res,
+                                      closeness = data.closeness$res,
+                                      eigen = data.eigen$vector,
+                                      coreness = data.coreness,
+                                      #power = data.power,
+                                      info = data.info)
+  return(analysis.network.data)
+}
+
+calculate.keyactors <- function(the.frame, the.cluster) {
+  the.filename <- glue("output/keyactors{the.cluster}-plot.pdf")
+  key.frame <- the.frame %>%
+    select(betweenness, eigen)
+  key.frame$manuscriptID <- rownames(key.frame)
+  rownames(key.frame) <- NULL
+  key.frame$cluster <- the.cluster
+  key.res <- lm(eigen ~ betweenness, data = key.frame)$residuals
+  key.frame <- transform(key.frame, residuals = key.res)
+  key.frame <- key.frame %>%
+    select(manuscriptID, cluster, betweenness, eigen, residuals) %>%
+    filter(!manuscriptID %in% analysis.cluster.frame$manuscriptID)
+  key.ymin <- min(key.frame$eigen) - 0.1
+  key.ymax <- max(key.frame$eigen) + 0.1
+  key.ymean <- mean(key.frame$eigen)
+  key.xmin <- min (key.frame$betweenness) - 100
+  key.xmax <- max(key.frame$betweenness) + 100
+  key.xmean <- mean(key.frame$betweenness)
+  key.frame <- key.frame %>%
+    mutate(keystatus = case_when((eigen > key.ymean & betweenness > key.xmean) ~ "Hub",
+                                 (eigen > key.ymean & betweenness < key.xmean) ~ "Pulse-Taker",
+                                 (eigen < key.ymean & betweenness > key.ymean) ~ "Gatekeeper")) %>%
+    na.omit()
+  graph.frame <- key.frame %>%
+    filter(!(eigen <= key.ymean & betweenness <= key.xmean))
+  key.plot <- ggscatter(graph.frame, x = "betweenness", y = "eigen",
+                        label = "manuscriptID",
+                        label.rectangle = FALSE,
+                        repel = TRUE,
+                        theme = theme_minimal(),
+                        xlab = "Betweenness Centrality",
+                        ylab = "Eigenvector Centrality",
+                        point = TRUE,
+                        ylim = c(key.ymin, key.ymax),
+                        xlim = c(key.xmin, key.xmax),
+                        show.legend.text = FALSE,
+                        color = "residuals",
+                        legend = "bottom") +
+    scale_color_gradient2(low = iu.gradient$low[the.cluster],
+                          high = iu.gradient$high[the.cluster],
+                          mid = iu.gradient$mid[the.cluster]) +
+    geom_hline(yintercept = key.ymean) +
+    geom_vline(xintercept = key.xmean) +
+    geom_label(aes(x = key.xmax,
+                   y = key.ymin,
+                   label = "Gatekeepers", hjust = 1),
+               color = "#330D2B", fill = "#DECADC") +
+    geom_label(aes(x = key.xmax,
+                   y = key.ymax,
+                   label = "Hubs", hjust = 1),
+               color = "#330D2B", fill = "#DECADC") +
+    geom_label(aes(x = key.xmin,
+                   y = key.ymax,
+                   label = "Pulse-Takers", hjust = 0),
+                   color = "#330D2B", fill = "#DECADC")
+  ggsave(key.plot, filename = the.filename, width = 11.5, height = 8, units = "in", dpi = 300)
+  return(key.frame)
+}
+
+network.plot <- function(the.frame, the.reduction, the.cluster, the.size){
+  the.filename <- glue("output/cites-network-{the.cluster}.pdf")
+  the.frame <- the.frame[the.frame$cite %in% names(which(table(the.frame$cite) >= the.reduction)), ]
+  
+  the.graph <- simplify(
+    graph_from_edgelist(as.matrix(the.frame[,1:2]), directed = FALSE),
+    remove.loops = TRUE, remove.multiple = TRUE)
+  
+  V(the.graph)$color <- as.character(analysis.cluster.frame$color[match(V(the.graph)$name, analysis.cluster.frame$manuscriptID)])
+  V(the.graph)$color[is.na(V(the.graph)$color)] <- "#A7A9AB"
+  
+  set.seed(123)
+  the.graph <- ggraph(the.graph, layout = "dh") +
+    geom_edge_arc(color="#EEEEEE", strength = 0.3) +
+    geom_node_point(color=V(the.graph)$color, size = degree(the.graph)/the.size+4) +
+    geom_node_text(aes(label = name), size = 3, color="#191919", repel=T) +
+    theme_void()
+  ggsave(the.filename, plot = the.graph, width = 11, height = 8.5, units = "in", dpi = 300)
+}
+ 
 # Define colors, using IU branding colors https://www.iu.edu/brand/brand-expression/visual-language/color/index.html
 iu.colors <- c("#990000", "#FFAA00", "#056E41", "#006298", "#59264D")
+iu.colors.fade <<- c("#990000", "#FFAA00", "#056E41", "#006298", "#59264D")
+#iu.colors.fade <<- c("#F23A3F", "#FFD563", "#63B363", "#63B1D3", "#A07498")
+#iu.4.colors <- c("#0062986C", "#59264D6C", "#9900006C", "#056E416C")
+iu.4.colors <- c("#006298", "#59264D", "#990000", "#056E41")
 iu.10.colors <- c("#990000", "#FFAA00", "#056E41","#A7A9AB", "#006298", "#59264D",
                   "#DF3603", "#01426A", "#49AFC7")
+iu.crimson <- c("#5A0C0C", "#800000", "#990000", "#DC231E", "#F23A3F", "#FF636A",
+                "#FFD6DB", "#FFF7F8")
+iu.crimson <- c("#FFF7F8", "#FFD6DB", "#FF636A", "#F23A3F", "#DC231E", "#990000",
+                "#800000", "#5A0C0C")
+iu.gradient <<- data.frame(high = c("#5A0C0C", "#613D00", "#004421", "#00385F", "#330D2B", "#4A3C31"),
+                           mid = c("#990000", "#FFAA00", "#056E41", "#006298", "#59264D", "#A7A9AB"),
+                           low = c("#FFD6DB", "#FFF4C6", "#DEE8C6", "#C6ECF6", "#DECADC", "#EEEEEE"))
+
 
 ###########################################
 #                 Load Data               #
@@ -376,7 +545,7 @@ variables.jaccard <- scale(vegdist(t(analysis.frame), method = "jaccard"))
 # factors for further reduction based on the visualization.
 
 initial.analysis.pca <- PCA(analysis.frame, graph = FALSE)
-ggsave("output/initial-pca.pdf", width = 8.5, height = 8.5, units = "in", dpi = 300)
+#ggsave("output/initial-pca.pdf", width = 8.5, height = 8.5, units = "in", dpi = 300)
 
 ###########################################
 #    Further Condense Data Into Scales    #
@@ -486,19 +655,35 @@ analysis.scales$manuscriptID <- rownames(analysis.scales)
 rownames(analysis.scales) <- NULL
 
 #write_csv(as.data.frame(analysis.scales), "data/analysis-full.csv")
-rownames(analysis.scales) <- analysis.scales$manuscriptID
-analysis.scales$manuscriptID <- NULL
+
 
 
 ############################################################
 #  Compute hierarchical clustering on principal components #
 ############################################################
 
+analysis.scales <- read_csv("data/analysis-full.csv", col_names = TRUE, show_col_types = FALSE)
+analysis.scales <- as.data.frame(analysis.scales)
+rownames(analysis.scales) <- analysis.scales$manuscriptID
+analysis.scales$manuscriptID <- NULL
+
 # Re-run PCA on newly compiled and scaled dataframe
 analysis.pca <- PCA(analysis.scales, graph = FALSE)
 
 # Calculate HCPC
-res.hcpc <- HCPC(analysis.pca, graph = FALSE)
+res.hcpc <- HCPC(analysis.pca, consol = FALSE, graph = FALSE)
+
+analysis.cluster.frame <<- as.data.frame(res.hcpc$data.clust$clust)
+analysis.cluster.frame$manuscriptID <- rownames(res.hcpc$data.clust)
+analysis.cluster.frame <- analysis.cluster.frame %>%
+  rename("cluster" = "res.hcpc$data.clust$clust") %>%
+  select(manuscriptID, cluster)
+
+analysis.cluster.frame$color <- iu.colors.fade[analysis.cluster.frame$cluster]
+
+#################
+# Create Graphs #
+#################
 
 # Create and output dendrogram of clusters by manuscriptID
 fviz_dend(res.hcpc,
@@ -506,9 +691,7 @@ fviz_dend(res.hcpc,
           palette = iu.colors,               # Color palette see ?ggpubr::ggpar
           rect = FALSE, rect_fill = FALSE, # Add rectangle around groups
           ggtheme = theme_minimal(),
-          #rect_border = iu.colors,           # Rectangle color
-          labels_track_height = 0.8,      # Augment the room for labels
-          main = "Dendrogram of Calculated Clusters") +
+          labels_track_height = 0.8) +     # Augment the room for labels
   scale_x_continuous(breaks = NULL)
 ggsave("output/cluster_dend.pdf", width = 22, height = 6, units = "in", dpi = 300)
 
@@ -518,11 +701,60 @@ fviz_cluster(res.hcpc,
              show.clust.cent = TRUE, # Show cluster centers
              palette = iu.colors,         # Color palette see ?ggpubr::ggpar
              ggtheme = theme_minimal(),
-             main = "Cluster Map of Calculated Clusters")
-ggsave("output/cluster_map.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
+             axes = c(1, 2),
+             main = "")
+ggsave("output/cluster_map1-2.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
 
-# Create and output scree plot to identify explanatory dimensions
-fviz_eig(analysis.pca, addlabels = TRUE, ylim = c(0, 20), ggtheme = theme_minimal())
+# Create and output a cluster map using calculated X-Y coordinates
+fviz_cluster(res.hcpc,
+             repel = TRUE,            # Avoid label overlapping
+             show.clust.cent = TRUE, # Show cluster centers
+             palette = iu.colors,         # Color palette see ?ggpubr::ggpar
+             ggtheme = theme_minimal(),
+             axes = c(1, 3),
+             main = "Cluster Map of Calculated Clusters")
+ggsave("output/cluster_map1-3.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
+
+# Create and output a cluster map using calculated X-Y coordinates
+fviz_cluster(res.hcpc,
+             repel = TRUE,            # Avoid label overlapping
+             show.clust.cent = TRUE, # Show cluster centers
+             palette = iu.colors,         # Color palette see ?ggpubr::ggpar
+             ggtheme = theme_minimal(),
+             axes = c(2, 3),
+             main = "Cluster Map of Calculated Clusters")
+ggsave("output/cluster_map2-3.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
+
+
+# Create quadrant chart
+quadrant.values <- c(16, 24, 26, 21)
+quadrant.plot <- four_quadrant(quadrant.values)
+quadrant.plot <- quadrant.plot +
+  xlim(-10,10) + ylim(-5.4,5.4) +
+  annotate(geom = "text", x = 5, y = -2,
+           label = "Studies that explore\nsocial and individual experiences\nthrough attitudes and beliefs",
+           hjust = 0, vjust = 1, size = 3.5, color = "#243142") +
+  annotate(geom = "text", x = 4.5, y = 2.5,
+           label = "Studies that explore\nsocial and individual experiences\nthrough behaviors and practices",
+           hjust = 0, vjust = 1, size = 3.5, color = "#243142") +
+  annotate(geom = "text", x = -5.5, y = -2.5,
+           label = "Studies that explore\nthe teacher pipeline\nthrough attitudes and beliefs",
+           hjust = 1, vjust = 1, size = 3.5, color = "#243142") +
+  annotate(geom = "text", x = -5.25, y = 3,
+           label = "Studies that explore\nthe teacher pipeline\nthrough behaviors and practices",
+           hjust = 1, vjust = 1, size = 3.5, color = "#243142") +
+  theme_minimal() + 
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank())
+quadrant.plot
+ggsave("output/quadrant-chart.pdf", plot = quadrant.plot, width = 11, height = 4.25, units = "in", dpi = 300, bg = "#FFFFFF")
+
+ # Create and output scree plot to identify explanatory dimensions
+fviz_eig(analysis.pca, addlabels = TRUE, ylim = c(0, 20),
+         ggtheme = theme_minimal()) +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank())
 ggsave("output/scree_plot.pdf", width = 11, height = 8.5, units = "in", dpi = 300, bg = "#FFFFFF")
 
 # Pull out variables for analysis
@@ -531,8 +763,7 @@ var <- get_pca_var(analysis.pca)
 # Create and output a correlation plot for factors and dimensions. Of particular
 # interest are dimensions 1 and 2, and potentially 3.
 ggcorrplot(t(var$cos2), method = "circle", colors = c("#990000", "#59264D", "#FFAA00")) +
-  labs(x = "Dimensions", y = "Factors", title = "Dimension Correlations") +
-  theme_minimal()
+  labs(x = "Dimensions", y = "Factors", title = "Dimension Correlations")
 ggsave("output/corrplot.pdf", width = 8.5, height = 11, units = "in", dpi = 300)
 
 # Scree plots of each dimension as another representation of the correlation plot
@@ -546,10 +777,14 @@ ggsave("output/dim2-contributions.pdf", width = 11, height = 8.5, units = "in", 
 fviz_contrib(analysis.pca, choice = "var", axes = 3, top = 10)
 ggsave("output/dim3-contributions.pdf", width = 11, height = 8.5, units = "in", dpi = 300)
 
+
+# Dim 1: Teacher Pipeline (-) - Social and Individual Experiences (+)
+# Dim 2: Attitudes and Beliefs (-) - Behaviors and Practices (+)
+
 # PCA factor map color by cos2 values: quality on the factor map
 fviz_pca_var(analysis.pca, col.var = "cos2",
              gradient.cols = c("#59264D", "#FFAA00", "#990000"), 
-             repel = TRUE # Avoid text overlapping
+             repel = TRUE, # Avoid text overlapping
 )
 ggsave("output/pca.pdf", width = 11, height = 11, units = "in", dpi = 300)
 
@@ -589,11 +824,10 @@ write_csv(cluster.details.frame, "output/cluster_details.csv")
   
 factor.flow.frame <- read_csv("data/factor_flow-no_exclude.csv", col_names = TRUE, show_col_types = FALSE)
 ggplot(data = factor.flow.frame,
-       aes(#axis1 = start,
-           axis1 = descriptor_reduction,
-           axis3 = final)) + #,
-           #axis3 = final)) +
-  scale_x_discrete(limits = c("Descriptor Reduction", #"Scale Development",
+       aes(axis1 = start,
+           axis2 = descriptor_reduction,
+           axis3 = final)) +
+  scale_x_discrete(limits = c("Initial", "PCA Reduction", #"Scale Development",
                               "Final"), expand = c(.2, .05)) +
   xlab("Process") +
   geom_alluvium(aes(fill = final)) +
@@ -609,6 +843,150 @@ ggplot(data = factor.flow.frame,
 ggsave("output/process-alluvial.pdf", width = 22, height = 11, units = "in", dpi = 300)
 
 
+compare.count <- read_csv("data/te-tet-differences.csv", col_names = TRUE, show_col_types = FALSE)
+compare.count <- subset(compare.count, !(terms %in% "baseline"))
+compare.count$te2 <- round((compare.count$te + 1) / sum(compare.count$te + 1), digits = 3)
+compare.count$tet2 <- round((compare.count$tet + 1) / sum(compare.count$tet + 1), digits = 3)
+compare.count$tet2[compare.count$tet == 0] <- 0
+compare.count$difference <- round(log2(compare.count$te2/compare.count$tet2), digits = 3)
+compare.count$difference[compare.count$difference > 3] <- 3
+compare.count$difference[compare.count$difference < -3] <- -3
+compare.count[compare.count$difference > 0, "status"] <- "Teacher Education"
+compare.count[compare.count$difference < 0, "status"] <- "Teacher Education with Technology"
+library(ggpubr)
+compare.graph2 <- ggdotchart(compare.count, x = "terms", y = "difference",
+                             color = "status", sorting = "descending", add = "segments",
+                             rotate = TRUE, dot.size = 6,
+                             palette = iu.colors,
+                             # label = abs(round(compare.count$difference, 1)),
+                             #font.label = list(size = 8, vjust = 0.5, color = "white"),
+                             ggtheme = theme_pubr()) +
+  geom_hline(yintercept = 0, linetype = 3, color = "lightgray") +
+  scale_y_continuous(breaks = -3:3, limits = c(-3, 3), labels=c("8X+", "4X","2X","Same","2X","4X", "8X+")) + xlab("Descriptors") +
+  labs(color = "") +
+  ylab("Relative difference (log2)") +
+  theme(text=element_text(size=10))
+compare.graph2
+ggsave("output/te-tet-compare.pdf", width = 8.5, height = 11, units = "in", dpi = 300)
 
+#################################
+# Network analysis of citations #
+#################################
+
+#analysis.cites <- read_csv("data/mtf-citations.csv", col_names = FALSE, show_col_types = FALSE)
+#analysis.cites.original <- read_csv("data/mtf-cites-original.csv", col_names = FALSE, show_col_types = FALSE) %>%
+#  rename("manuscriptID" = "X1", "cite" = "X2")
+
+#analysis.cites <- analysis.cites %>%
+#  pivot_longer(!X1,
+#               values_to = "cite",
+#               values_drop_na = TRUE) %>%
+#  select(X1, cite) %>%
+#  dplyr::rename("manuscriptID" = "X1")# %>%
+#analysis.cites <- rbind(analysis.cites, analysis.cites.original)
+#write_csv(analysis.cites, file = "data/mtf-citations-edgelist.csv")
+
+analysis.cites <- read_csv("data/mtf-citations-edgelist.csv",
+                           col_names = TRUE,
+                           show_col_types = FALSE)
+analysis.cites <- analysis.cites[analysis.cites$cite %in% names(which(table(analysis.cites$cite) > 1)), ]
+analysis.cites <- analysis.cites[-1316,]
+
+# OK, move through different clusters...
+# Full Graph
+cites.all.centrality <- calculate.centrality(analysis.cites)
+cites.6.keyactors <- calculate.keyactors(cites.all.centrality, 6)
+network.plot(analysis.cites, 8, 0, 4)
+
+# Cluster 1
+cites.1.frame <- isolate.cluster(1, analysis.cites)
+cites.1.centrality <- calculate.centrality(cites.1.frame)
+cites.1.keyactors <- calculate.keyactors(cites.1.centrality, 1)
+network.plot(cites.1.frame, 2, 1, 1)
+
+# Cluster 2
+cites.2.frame <- isolate.cluster(2, analysis.cites)
+cites.2.centrality <- calculate.centrality(cites.2.frame)
+cites.2.keyactors <- calculate.keyactors(cites.2.centrality, 2)
+network.plot(cites.2.frame, 5, 2, 2)
+
+# Cluster 3
+cites.3.frame <- isolate.cluster(3, analysis.cites)
+cites.3.centrality <- calculate.centrality(cites.3.frame)
+cites.3.keyactors <- calculate.keyactors(cites.3.centrality, 3)
+network.plot(cites.3.frame, 5, 3, 2)
+
+# Cluster 4
+cites.4.frame <- isolate.cluster(4, analysis.cites)
+cites.4.centrality <- calculate.centrality(cites.4.frame)
+cites.4.keyactors <- calculate.keyactors(cites.4.centrality, 4)
+network.plot(cites.4.frame, 3, 4, 2)
+
+# Cluster 5
+cites.5.frame <- isolate.cluster(5, analysis.cites)
+cites.5.centrality <- calculate.centrality(cites.5.frame)
+cites.5.keyactors <- calculate.keyactors(cites.5.centrality, 5)
+network.plot(cites.5.frame, 2, 5, 1)
+
+cites.keyactors <- bind_rows(cites.1.keyactors, cites.2.keyactors,
+                             cites.3.keyactors, cites.4.keyactors,
+                             cites.5.keyactors) %>%
+  arrange(cluster, keystatus, manuscriptID)
+write_csv(cites.keyactors, file = "output/keyactors.csv", append = FALSE)
+
+
+#set.seed(123)
+#test <- cclust(analysis.scales, k = 5)
+#plot(test)
+#clusterSim(test)
+#barplot(test)
+#pairs(test)
+
+#shadow(test)
+#plot(shadow(test))
+#Silhouette(test)
+#plot(Silhouette(test))
+#shadowStars(test, panel=panelShadowSkeleton)
+#stripes(test)
+#barchart(test)
+#barplot(test, bycluster=FALSE)
+#barchart(test, scales=list(abbreviate=FALSE), origin=0)
+#barchart(test, origin=rev(test@xcent), mlcol=NULL)
+#barchart(test, shade=TRUE, origin = 0)
+#clusters(test)
+#dend2 <- as.dendrogram(test.k$cluster)
+#set.seed(123)
+#test.k <- kmeans(analysis.scales, centers = 5)
+#test.k$cluster
+#cluster.1 <- as.data.frame(test.k$cluster)
+#cluster.1$manuscriptID <- rownames(cluster.1)
+#rownames(cluster.1) <- NULL
+#cluster.2 <- as.data.frame(clusters(test))
+#cluster.2$manuscriptID <- rownames(cluster.2)
+#rownames(cluster.2) <- NULL
+#cluster.compare <- join(cluster.1, cluster.2, by = "manuscriptID")
+#rownames(cluster.compare) <- cluster.compare$manuscriptID
+#cluster.compare$manuscriptID <- NULL
+#fviz_cluster(test.k, data = analysis.scales)
+#cluster.compare <- cluster.compare %>% pivot_longer(c(1,3))
+
+
+#library(slopegraph)
+#slopegraph(cluster.compare,
+#           col.lines = cols, col.lab = cols, 
+#           main = 'Relative Rank of U.S. State Populations, 1790-1870')
+
+#library(CGPfunctions)
+#newggslopegraph(dataframe = cluster.compare, Times = name, Measurement = value,
+#                Grouping = manuscriptID)
+
+#test.test <- slswFlexclust(analysis.scales, test)
+#plot(test.test)
+#densityplot(test.test)
+#boxplot(test.test)
+
+#testStep <- stepFlexclust(analysis.scales, k=4:7)
+#testStep
+#slsaplot(testStep)
 
 
