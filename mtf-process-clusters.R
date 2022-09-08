@@ -24,13 +24,8 @@ library(readr)
 library(ggplot2)
 library(FactoMineR)
 library(factoextra)
-#library(CAinterprTools)
-#library(ClustOfVar)
-#library(cluster)
-#library(NbClust)
 library(vegan)
 library(dendextend)
-#library(missMDA)
 library(scales)
 library(ggbiplot)
 library(dplyr)
@@ -43,7 +38,6 @@ library(ggalluvial)
 library(ggfittext)
 library(tidyclust)
 library(flexclust)
-#library(hrbrthemes)
 library(ggpubr)
 library(sna)
 library(info.centrality)
@@ -117,7 +111,6 @@ four_quadrant <- function(x, col_text = "#FFF7F8") {
     geom_hline(aes(yintercept = 0), size = 0.8) +
     geom_vline(aes(xintercept = 0), size = 0.8) +
     coord_fixed() +
-    #xlim(c(-mm,mm)) + ylim(c(-mm,mm)) +
     theme_void() +
     theme(legend.position = "none")
 }
@@ -138,17 +131,12 @@ isolate.cluster <- function(the.cluster, the.frame) {
 }
 
 calculate.centrality <- function(the.frame) {
+  
   the.graph <- simplify(
     graph_from_edgelist(as.matrix(the.frame), directed = FALSE),
     remove.loops = TRUE,
     remove.multiple = TRUE
   )
-  
-  #the.network <- network(the.frame,
-  #                       matrix.type = "edgelist",
-  #                       ignore.eval = TRUE,
-  #                       multiple = TRUE,
-  #                       directed = FALSE)
   
   data.degree <-
     centralization.degree(the.graph, mode = "all", loops = FALSE)
@@ -160,9 +148,7 @@ calculate.centrality <- function(the.frame) {
     centralization.closeness(the.graph, mode = "all")
   data.net.closeness <- data.closeness$centralization
   data.eigen <- centralization.evcent(the.graph, directed = FALSE)
-  #data.prestige <- prestige(the.frame)
   data.coreness <- coreness(the.graph, mode = "all")
-  #data.power <- power_centrality(analysis.cites.graph, loops = FALSE)
   data.info <- info.centrality.vertex(the.graph)
   
   analysis.network.data <- data.frame(
@@ -171,8 +157,6 @@ calculate.centrality <- function(the.frame) {
     closeness = data.closeness$res,
     eigen = data.eigen$vector,
     coreness = data.coreness,
-    #prestige = data.prestige,
-    #power = data.power,
     info = data.info
   )
   return(analysis.network.data)
@@ -239,8 +223,11 @@ calculate.keyactors <- function(the.frame, the.cluster) {
       xlim = c(key.xmin, key.xmax),
       show.legend.text = FALSE,
       color = "residuals",
-      legend = "bottom"
+      legend = "bottom",
+      conf.int = FALSE, 
+      cor.coef = FALSE
     ) +
+    geom_smooth(method = "lm", color = "#EEEEEE", se = FALSE, fullrange = TRUE, linetype = "solid") +
     scale_color_gradient2(low = iu.gradient$low[the.cluster],
                           high = iu.gradient$high[the.cluster],
                           mid = iu.gradient$mid[the.cluster]) +
@@ -265,11 +252,7 @@ calculate.keyactors <- function(the.frame, the.cluster) {
       ),
       color = "#330D2B",
       fill = "#DECADC"
-    )# +
-  #geom_label(aes(x = key.xmin,
-  #               y = key.ymax,
-  #               label = "Pulse-Takers", hjust = 0),
-  #               color = "#330D2B", fill = "#DECADC")
+    )
   ggsave(
     key.plot,
     filename = the.filename,
