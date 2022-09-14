@@ -46,6 +46,11 @@ library(glue)
 library(ggraph)
 library(gt)
 
+# Set file locations
+project.path <- here::here()
+data.path <- glue("{project.path}/data/")
+output.path <- glue("{project.path}/output/")
+
 ###########################################
 #            Define Functions             #
 ###########################################
